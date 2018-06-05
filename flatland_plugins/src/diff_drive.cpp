@@ -228,12 +228,7 @@ void DiffDrive::BeforePhysicsStep(const Timekeeper& timekeeper) {
       twist_pub_msg.header.frame_id = odom_msg_.child_frame_id;
 
       // Forward velocity in twist.linear.x
-      twist_pub_msg.twist.twist.linear.x = cos(angle) * linear_vel_local.x +
-                                           sin(angle) * linear_vel_local.y +
-                                           noise_gen_[3](rng_);
-
-      // Angular velocity in twist.angular.z
-      twist_pub_msg.twist.twist.angular.z = angular_vel + noise_gen_[5](rng_);
+      twist_pub_msg.twist.twist = odom_msg_.twist.twist;
 
       twist_pub_msg.twist.covariance = odom_msg_.twist.covariance;
 
